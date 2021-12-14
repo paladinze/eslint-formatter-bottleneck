@@ -1,0 +1,19 @@
+{
+  "name": "eslint-formatter-bottleneck",
+  "version": "1.0.0",
+  "description": "A Eslint formatter that only shows what matters",
+  "main": "src/index.js",
+  "license": "MIT",
+  "author": "paladinze<paladinze@hotmail.com>",
+  "keywords": [
+    "eslint",
+    "eslint-formatter",
+    "eslintformatter"
+  ],
+  "repository": "paladinze/eslint-formatter-bottleneck",
+  "engines": {
+		"node": "^12.22.0 || ^14.17.0 || >=16.0.0"
+	},
+  "files": ["lib"],
+  "scripts": {}
+}
