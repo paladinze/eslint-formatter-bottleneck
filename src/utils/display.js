@@ -30,7 +30,9 @@ const showTopViolations = ({ violations, numOfTopViolations, violationType = Vio
             const percent = ruleViolationCount / totalViolations;
             return ({ rule, count: ruleViolationCount, percent });
         })
-        .sort((a, b) => { a.value < b.value });
+        .sort((a, b) => {
+            return b.count - a.count;
+        });
 
     if (numOfTopViolations) {
         sortedRules = sortedRules.slice(0, numOfTopViolations);
