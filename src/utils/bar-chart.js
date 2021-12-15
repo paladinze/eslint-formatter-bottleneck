@@ -21,7 +21,7 @@ module.exports = function (barItemList, opts) {
     }
     const containerPadding = (containerWidth > 20 ? NORMAL_CONTAINER_PADDING : SMALL_CONTAINER_PADDING);
     const maxLabelLength = _.max(_.map(barItemList, ({ leftLabel }) => leftLabel.toString().length));
-    const maxBarWidth = containerWidth - containerPadding - maxLabelLength;
+    const maxBarWidth = containerWidth * 0.75 - containerPadding - maxLabelLength;
 
     const maxPercent = _.maxBy(barItemList, 'percent').percent;
     const displayData = barItemList.map(item => {
@@ -47,12 +47,12 @@ module.exports = function (barItemList, opts) {
     const barLines = displayData.map((item) => {
         const { leftLabel, rightLabel, barWidth } = item;
 
-        let elementLine = leftLabel ?? '';
-        elementLine += ' : ';
-        elementLine += new Array(barWidth).join(barSymbol);
-        elementLine += '  ';
-        elementLine += rightLabel ?? '';
-        return elementLine;
+        let barLine = leftLabel ?? '';
+        barLine += ' : ';
+        barLine += new Array(barWidth).join(barSymbol);
+        barLine += '  ';
+        barLine += rightLabel ?? '';
+        return barLine;
     })
 
     console.log(barLines.join('\n'));

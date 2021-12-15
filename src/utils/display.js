@@ -4,20 +4,18 @@ const chalk = require('chalk');
 const displayBarChart = require('./bar-chart');
 const { ViolationType } = require('../constants');
 
-const printSpacer = (num = 1) => {
+const printSpacer = (num = 0) => {
     console.log('\n'.repeat(num));
 }
 
-const printSectionTitle = ({
-    violationType,
-    violatedRules
-}) => {
+const printSectionTitle = ({ violationType, violatedRules, totalViolations, }) => {
     const actualViolationsToShow = violatedRules.length;
-    const title = `ESLint: Top ${actualViolationsToShow} ${violationType}s \n`.toUpperCase();
+    const title = `ESLint: Top ${actualViolationsToShow} ${violationType}s`.toUpperCase();
+    const subTitle = ` (total occurrences: ${totalViolations})`;
     if (violationType === ViolationType.error) {
-        console.log(chalk.red.bold.underline(title));
+        console.log(chalk.red.bold.underline(title) + subTitle);
     } else {
-        console.log(chalk.yellow.bold.underline(title));
+        console.log(chalk.yellow.bold.underline(title) + subTitle);
     }
 }
 
@@ -49,13 +47,42 @@ const showTopViolations = ({ violations, numOfTopViolations, violationType = Vio
 
     printSectionTitle({
         violationType,
-        violatedRules
+        violatedRules,
+        totalViolations
     });
 
     displayBarChart(displayData);
     printSpacer();
 }
 
+const showNextStep = ({ violationSummary, maxWarningsAllowed, } = {}) => {
+    const { errors, warnings } = violationSummary;
+    const stepList = [];
+
+    const numOfErrors = errors.length;
+    const numOfWarnings = warnings.length;
+    const totalViolations = numOfErrors + numOfWarnings;
+
+    if (typeof maxWarningsAllowed !== 'undefined' && (totalViolations > maxWarningsAllowed)) {
+        stepList.push(`must fix newly added warnings, only ${maxWarningsAllowed} warnings allowed, yet you have ${totalViolations}.`);
+    }
+
+    if (errors.length > 0) {
+        stepList.push(`must have 0 error, yet you have ${errors.length}.`);
+    }
+
+    if (_.isEmpty(stepList)) {
+        return;
+    }
+
+    console.log(chalk.bgRed.bold.underline('What you must do'.toUpperCase()));
+    stepList.forEach(item => {
+        const prefix = '[-] ';
+        console.log(chalk.red.bold(prefix + item));
+    })
+}
+
 module.exports = {
-    showTopViolations
+    showTopViolations,
+    showNextStep
 }
