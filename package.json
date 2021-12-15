@@ -1,6 +1,6 @@
 {
   "name": "eslint-formatter-bottleneck",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A Eslint formatter that only shows what matters",
   "main": "src/index.js",
   "license": "MIT",
