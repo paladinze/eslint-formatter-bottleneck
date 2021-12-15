@@ -1,43 +1,25 @@
+const { ViolationType, NO_ERROR_MSG, NUM_TOP_VIOLATIONS } = require("./constants");
+const { showTopViolations } = require("./utils/display");
+const { getFlattenedViolations } = require("./utils/formatter");
+
+const isAllCodeClean = ({ errors, warnings }) => {
+    return !errors.length && !warnings.length;
+}
+
 module.exports = function (rawResults, context) {
     const results = rawResults || [];
 
-    const summary = results.reduce(
-        (seq, current) => {
-            current.messages.forEach((msg) => {
-                const logMessage = {
-                    filePath: current.filePath,
-                    ruleId: msg.ruleId,
-                    ruleUrl: context.rulesMeta[msg.ruleId]?.docs.url,
-                    message: msg.message,
-                    line: msg.line,
-                    column: msg.column,
-                    terminal: `${current.filePath}:${msg.line}:${msg.column}`,
-                };
+    const { errors, warnings } = getFlattenedViolations(results, context);
 
-                if (msg.severity === 1) {
-                    logMessage.type = 'warning';
-                    seq.warnings.push(logMessage);
-                }
-                if (msg.severity === 2) {
-                    logMessage.type = 'error';
-                    seq.errors.push(logMessage);
-                }
-            });
-            return seq;
-        },
-        {
-            errors: [],
-            warnings: [],
-        },
-    );
-
-    if (summary.errors.length > 0 || summary.warnings.length > 0) {
-        return (
-            `Errors: ${summary.errors.length
-            }, Warnings: ${summary.warnings.length
-            }\n`
-        );
+    if (isAllCodeClean({ errors, warnings })) {
+        return NO_ERROR_MSG;
     }
 
-    return 'Your code is super clean 😇';
+    if (errors.length) {
+        showTopViolations({ violations: errors, violationType: ViolationType.error, numOfTopViolations: NUM_TOP_VIOLATIONS });
+    }
+
+    if (warnings.length) {
+        showTopViolations({ violations: warnings, violationType: ViolationType.warning, numOfTopViolations: NUM_TOP_VIOLATIONS });
+    }
 };
