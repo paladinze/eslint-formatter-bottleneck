@@ -1,9 +1,10 @@
 const _ = require('lodash');
-
-const defaultContainerWidth = 80;
-const AsciiBarSymbol = '=';
-const NormalContainerPadding = 30;
-const SmallContainerPadding = 1;
+const {
+    DEFAULT_CONTAINER_WIDTH,
+    ASCII_BAR_SYMBOL,
+    NORMAL_CONTAINER_PADDING,
+    SMALL_CONTAINER_PADDING
+} = require('../constants');
 
 module.exports = function (barItemList, opts) {
     if (_.isEmpty(barItemList)) {
@@ -12,13 +13,13 @@ module.exports = function (barItemList, opts) {
     opts = (opts && typeof opts === 'object') ? opts : {};
 
 
-    const barSymbol = AsciiBarSymbol;
+    const barSymbol = ASCII_BAR_SYMBOL;
 
     let containerWidth = require('window-size').width;
     if (!(typeof containerWidth === 'number' && containerWidth > 0)) {
-        containerWidth = defaultContainerWidth;
+        containerWidth = DEFAULT_CONTAINER_WIDTH;
     }
-    const containerPadding = (containerWidth > 20 ? NormalContainerPadding : SmallContainerPadding);
+    const containerPadding = (containerWidth > 20 ? NORMAL_CONTAINER_PADDING : SMALL_CONTAINER_PADDING);
     const maxLabelLength = _.max(_.map(barItemList, ({ leftLabel }) => leftLabel.toString().length));
     const maxBarWidth = containerWidth - containerPadding - maxLabelLength;
 
