@@ -1,4 +1,4 @@
-
+const figures = require('figures')
 const ViolationType = {
     warning: 'warning',
     error: 'error'
@@ -7,7 +7,7 @@ const ViolationType = {
 const NO_ERROR_MSG = 'Your code is super clean 😇';
 const NUM_TOP_VIOLATIONS = 5;
 const DEFAULT_CONTAINER_WIDTH = 80;
-const ASCII_BAR_SYMBOL = '=';
+const ASCII_BAR_SYMBOL = figures.square ?? '=';
 const NORMAL_CONTAINER_PADDING = 30;
 const SMALL_CONTAINER_PADDING = 1;
 

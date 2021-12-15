@@ -1,5 +1,6 @@
 const _ = require('lodash');
 const chalk = require('chalk');
+const table = require("text-table");
 
 const displayBarChart = require('./bar-chart');
 const { ViolationType } = require('../constants');
@@ -10,7 +11,7 @@ const printSpacer = (num = 0) => {
 
 const printSectionTitle = ({ violationType, violatedRules, totalViolations, }) => {
     const actualViolationsToShow = violatedRules.length;
-    const title = `ESLint: Top ${actualViolationsToShow} ${violationType}s`.toUpperCase();
+    const title = `ESLint: Top ${actualViolationsToShow} ${violationType} types`.toUpperCase();
     const subTitle = ` (total occurrences: ${totalViolations})`;
     if (violationType === ViolationType.error) {
         console.log(chalk.red.bold.underline(title) + subTitle);
@@ -82,7 +83,42 @@ const showNextStep = ({ violationSummary, maxWarningsAllowed, } = {}) => {
     })
 }
 
+const showErrorList = (results) => {
+    let fileErrorSummary = "";
+    results.forEach(result => {
+        const { messages, filePath } = result;
+        const errorMsgs = messages.filter(msg => {
+            return msg.fatal || msg.severity === 2
+        });
+        if (errorMsgs.length === 0) {
+            return;
+        }
+
+        fileErrorSummary += `${chalk.underline(filePath)}\n`;
+        fileErrorSummary += `${table(
+            errorMsgs.slice(0, 3).map(msg => {
+                return [
+                    "",
+                    msg.line || 0,
+                    msg.column || 0,
+                    chalk.red("error"),
+                    msg.message.replace(/([^ ])\.$/u, "$1"),
+                    chalk.dim(msg.ruleId || "")
+                ];
+            }), {
+              align: ["", "r", "l"],
+              stringLength(str) { return (str).length; }
+            })
+            .split("\n")
+            .map(el => el.replace(/(\d+)\s+(\d+)/u, (m, p1, p2) => chalk.dim(`${p1}:${p2}`)))
+            .join("\n")
+        }\n\n`;
+    });
+    console.log(fileErrorSummary);
+}
+
 module.exports = {
     showTopViolations,
-    showNextStep
+    showNextStep,
+    showErrorList,
 }

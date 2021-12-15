@@ -22,8 +22,11 @@
   },
   "dependencies": {
     "chalk": "^4.1.2",
+    "figures": "3.2.0",
     "lodash": ">=4.17.12",
     "meow": "3.7.0",
+    "strip-ansi": "^7.0.1",
+    "text-table": "^0.2.0",
     "window-size": "0.1.4"
   },
   "devDependencies": {

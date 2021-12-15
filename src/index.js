@@ -1,5 +1,5 @@
 const { ViolationType, NO_ERROR_MSG, NUM_TOP_VIOLATIONS } = require("./constants");
-const { showTopViolations, showNextStep } = require("./utils/display");
+const { showTopViolations, showNextStep, showErrorList } = require("./utils/display");
 const { getFlattenedViolations } = require("./utils/formatter");
 
 const isAllCodeClean = ({ errors, warnings }) => {
@@ -23,6 +23,7 @@ module.exports = function (rawResults, context) {
 
     if (errors.length) {
         showTopViolations({ violations: errors, violationType: ViolationType.error, numOfTopViolations: NUM_TOP_VIOLATIONS });
+        showErrorList(results);
     }
 
     showNextStep({
