@@ -12,8 +12,15 @@
   ],
   "repository": "paladinze/eslint-formatter-bottleneck",
   "engines": {
-		"node": "^12.22.0 || ^14.17.0 || >=16.0.0"
-	},
-  "files": ["lib"],
-  "scripts": {}
+    "node": "^12.22.0 || ^14.17.0 || >=16.0.0"
+  },
+  "files": [
+    "lib"
+  ],
+  "scripts": {
+    "test": "eslint -f ./src/index.js test"
+  },
+  "devDependencies": {
+    "eslint": "^8.4.1"
+  }
 }
