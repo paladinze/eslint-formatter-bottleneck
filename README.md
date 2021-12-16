@@ -14,6 +14,9 @@ npm install --save-dev eslint-formatter-bottleneck
 eslint --format bottleneck src
 ```
 
+<img width="750" alt="formatter demo" src="https://github.com/paladinze/eslint-formatter-bottleneck/blob/main/screenshots/demo.png?raw=true">
+
+
 ## Configuration
 
 Configuration is done through environment variables. The following is supported:
