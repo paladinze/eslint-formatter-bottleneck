@@ -73,6 +73,18 @@ const showNextStep = ({ violationSummary, maxViolations, } = {}) => {
     }
 
     if (_.isEmpty(stepList)) {
+        console.log(chalk.bgGreen.bold.underline('Eslint Summary: All Clear'.toUpperCase()));
+        const successMsgList = [];
+        if (totalViolations === 0) {
+            successMsgList.push('Good job! you have 0 warning and 0 error');
+        } else {
+            successMsgList.push('You have met all requirements, but there is still room for improvements!');
+        }
+        successMsgList.forEach(item => {
+            const prefix = '[+] ';
+            console.log(chalk.green.bold(prefix + item));
+        })
+        printSpacer();
         return;
     }
 
