@@ -56,7 +56,7 @@ const showTopViolations = ({ violations, numOfTopViolations, violationType = Vio
     printSpacer();
 }
 
-const showNextStep = ({ violationSummary, maxWarningsAllowed, } = {}) => {
+const showNextStep = ({ violationSummary, maxViolations, } = {}) => {
     const { errors, warnings } = violationSummary;
     const stepList = [];
 
@@ -64,8 +64,8 @@ const showNextStep = ({ violationSummary, maxWarningsAllowed, } = {}) => {
     const numOfWarnings = warnings.length;
     const totalViolations = numOfErrors + numOfWarnings;
 
-    if (typeof maxWarningsAllowed !== 'undefined' && (totalViolations > maxWarningsAllowed)) {
-        stepList.push(`must fix newly added warnings, only ${maxWarningsAllowed} warnings allowed, yet you have ${totalViolations}.`);
+    if (typeof maxViolations !== 'undefined' && (totalViolations > maxViolations)) {
+        stepList.push(`must fix newly added warnings, only ${maxViolations} warnings allowed, yet you have ${totalViolations}.`);
     }
 
     if (errors.length > 0) {
@@ -81,6 +81,7 @@ const showNextStep = ({ violationSummary, maxWarningsAllowed, } = {}) => {
         const prefix = '[-] ';
         console.log(chalk.red.bold(prefix + item));
     })
+    printSpacer();
 }
 
 const showErrorList = (results) => {

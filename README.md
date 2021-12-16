@@ -11,11 +11,11 @@ npm install --save-dev eslint-formatter-bottleneck
 ## Usage
 
 ```sh
-% eslint --format bottleneck src
+eslint --format bottleneck src
 ```
 
 ## Configuration
 
 Configuration is done through environment variables. The following is supported:
 
-- MAX_WARN_ALLOWED: display a warning when actual violations exceeds this number (default: 0)
+- MAX_VIOLATIONS: display a warning when total violations exceeds this number. By default, no warning will be displayed for number of violations.

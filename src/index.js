@@ -8,7 +8,7 @@ const isAllCodeClean = ({ errors, warnings }) => {
 
 module.exports = function (rawResults, context) {
     const results = rawResults || [];
-    const maxWarningsAllowed = Number(process.env.MAX_WARN_ALLOWED) ?? 0;
+    const maxViolations = Number(process.env.MAX_VIOLATIONS) ?? 0;
 
     const violationSummary = getFlattenedViolations(results, context);
     const { errors, warnings } = violationSummary;
@@ -28,6 +28,7 @@ module.exports = function (rawResults, context) {
 
     showNextStep({
         violationSummary,
-        maxWarningsAllowed,
+        maxViolations,
     })
+
 };

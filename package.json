@@ -18,7 +18,7 @@
     "src"
   ],
   "scripts": {
-    "test": "MAX_WARN_ALLOWED=8 eslint -f ./src/index.js test"
+    "test": "MAX_VIOLATIONS=8 eslint -f ./src/index.js test"
   },
   "dependencies": {
     "chalk": "^4.1.2",
