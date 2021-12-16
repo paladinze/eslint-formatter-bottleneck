@@ -22,3 +22,7 @@ eslint --format bottleneck src
 Configuration is done through environment variables. The following is supported:
 
 - MAX_VIOLATIONS: display a warning when total violations exceeds this number. By default, no warning will be displayed for number of violations.
+
+## Attribution
+This package is inspired by [eslint-summary-chart-formatter](https://www.npmjs.com/package/eslint-summary-chart-formatter) and [eslint-formatter-stylish
+](https://www.npmjs.com/package/eslint-formatter-stylish)
